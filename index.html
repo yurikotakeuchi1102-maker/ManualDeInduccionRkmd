@@ -211,62 +211,6 @@
   }
   .callout.red{ border-color:var(--red); background:#FBEAEA; }
 
-  /* chatbot */
-  .chat-shell{
-    background:var(--paper);
-    border:1px solid var(--line);
-    border-radius:16px;
-    overflow:hidden;
-  }
-  .chat-log{
-    height:380px;
-    overflow-y:auto;
-    padding:20px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    background:
-      radial-gradient(circle at 90% 10%, rgba(196,30,42,0.04), transparent 40%),
-      #FFFDF8;
-  }
-  .msg{ max-width:82%; padding:10px 14px; border-radius:14px; font-size:.94rem; }
-  .msg.bot{ background:#F1E6CE; color:var(--ink); align-self:flex-start; border-bottom-left-radius:4px; }
-  .msg.user{ background:var(--red); color:#fff; align-self:flex-end; border-bottom-right-radius:4px; }
-  .chat-input-row{
-    display:flex; gap:8px; padding:14px; border-top:1px solid var(--line); background:var(--paper);
-  }
-  .chat-input-row input{
-    flex:1;
-    padding:11px 14px;
-    border-radius:999px;
-    border:1px solid var(--line);
-    font-family:inherit;
-    font-size:.95rem;
-    background:#fff;
-  }
-  .chat-input-row input:focus{ outline:2px solid var(--gold); }
-  .chat-input-row button{
-    background:var(--red);
-    color:#fff;
-    border:none;
-    border-radius:999px;
-    padding:0 20px;
-    font-weight:700;
-    cursor:pointer;
-  }
-  .chat-input-row button:hover{ background:var(--red-dark); }
-  .suggestions{ display:flex; flex-wrap:wrap; gap:8px; padding:0 20px 16px; }
-  .suggestions button{
-    background:#fff;
-    border:1px solid var(--line);
-    border-radius:999px;
-    padding:6px 12px;
-    font-size:.8rem;
-    cursor:pointer;
-    color:var(--red-dark);
-  }
-  .suggestions button:hover{ background:var(--gold-soft); }
-
   footer{
     text-align:center;
     padding:26px;
@@ -283,7 +227,7 @@
 <header class="top">
   <p class="eyebrow">RKMD · Filial Lima Centro</p>
   <h1 class="title">De Junior a Adulto</h1>
-  <p class="subtitle">Estás por dejar el grupo de Juniors y unirte al grupo de adultos. Este manual reúne todo lo que necesitas saber: quién es quién, las normas del grupo y los aspectos clave del día a día. Yoroshiku onegaishimasu 🥁</p>
+  <p class="subtitle">Estás por dejar el grupo de Juniors y unirte al grupo de adultos. Este manual reúne todo lo que necesitas saber: quién es quién, las normas del grupo y los aspectos claves. Yoroshiku onegaishimasu 🥁</p>
 </header>
 <div class="taiko-band"></div>
 
@@ -291,8 +235,7 @@
   <button class="tab-btn active" data-tab="inicio">Inicio</button>
   <button class="tab-btn" data-tab="organigrama">Organigrama</button>
   <button class="tab-btn" data-tab="reglamento">Reglamento</button>
-  <button class="tab-btn" data-tab="importante">Aspectos clave</button>
-  <button class="tab-btn" data-tab="chatbot">Preguntas frecuentes 🥁</button>
+  <button class="tab-btn" data-tab="importante">Aspectos claves</button>
 </nav>
 
 <main>
@@ -305,7 +248,7 @@
     <div class="card">
       <h3>¿Qué cambia?</h3>
       <ul>
-        <li>Ensayas los sábados de <strong>8pm a 10pm</strong> en AELU (antes eran 7pm–8pm como junior).</li>
+        <li>Ensayos de 8pm a 10pm los sábados en AELU.</li>
         <li>Ya no necesitas venir acompañado de un padre, madre o apoderado durante el ensayo.</li>
         <li>Pasas a tener el mismo reglamento, tarifas y responsabilidades que cualquier miembro adulto.</li>
         <li>Puedes empezar a salir en presentaciones oficiales una vez que Shidobucho evalúe y autorice tu participación.</li>
@@ -322,8 +265,7 @@
       <ul>
         <li><strong>Organigrama:</strong> quién dirige cada área y qué hace cada una.</li>
         <li><strong>Reglamento:</strong> el reglamento completo de la filial, organizado por temas.</li>
-        <li><strong>Aspectos clave:</strong> detalles del día a día que todo miembro nuevo debe saber.</li>
-        <li><strong>Preguntas frecuentes:</strong> un chatbot para resolver dudas rápidas basado en este mismo contenido.</li>
+        <li><strong>Aspectos claves:</strong> detalles sobre los ensayos que todo miembro nuevo debe saber.</li>
       </ul>
     </div>
   </section>
@@ -581,7 +523,7 @@
 
   <!-- IMPORTANTE -->
   <section class="panel" id="importante">
-    <h2 class="section-title">Aspectos clave del día a día</h2>
+    <h2 class="section-title">Aspectos claves</h2>
     <p class="section-lede">Lo que todo miembro nuevo del grupo de adultos debería saber desde el primer ensayo.</p>
 
     <div class="card">
@@ -644,20 +586,6 @@
     </div>
   </section>
 
-  <!-- CHATBOT -->
-  <section class="panel" id="chatbot">
-    <h2 class="section-title">Preguntas frecuentes</h2>
-    <p class="section-lede">Un asistente sencillo que responde según el reglamento y el organigrama de RKMD Lima Centro. Si la pregunta está fuera de lo que sabe, te lo dirá — no inventa respuestas.</p>
-
-    <div class="chat-shell">
-      <div class="chat-log" id="chatLog"></div>
-      <div class="suggestions" id="chatSuggestions"></div>
-      <div class="chat-input-row">
-        <input type="text" id="chatInput" placeholder="Escribe tu pregunta, por ejemplo: ¿a qué hora es el ensayo?" autocomplete="off">
-        <button id="chatSend">Enviar</button>
-      </div>
-    </div>
-  </section>
 
 </main>
 
@@ -676,162 +604,6 @@
     });
   });
 
-  // ---------- Chatbot knowledge base ----------
-  // Each entry: keywords (all lowercase, no accents needed exactly, matched loosely) + answer.
-  const KB = [
-    {
-      k: ["hora ensayo","horario ensayo","cuando ensay","que hora","hora del ensayo"],
-      a: "Los ensayos de adultos son los sábados de 8pm a 10pm en la Asociación Estadio La Unión (AELU). El horario o lugar puede variar según disponibilidad; cualquier cambio lo comunica la directiva."
-    },
-    {
-      k: ["ensayo junior","hora junior","horario junior"],
-      a: "Los ensayos de juniors son los sábados de 7pm a 8pm en AELU."
-    },
-    {
-      k: ["shibucho","quien dirige","quien es el director","directora"],
-      a: "La Shibucho (directora de la filial) es Mayumi Oshiro. Dirige al grupo, unifica criterios entre áreas y representa a la filial ante instituciones externas."
-    },
-    {
-      k: ["fuku shibucho","subdirector"],
-      a: "La Fuku Shibucho (subdirectora) es Yuriko Takeuchi. Apoya al Shibucho, da seguimiento a los objetivos generales y es nexo entre áreas."
-    },
-    {
-      k: ["shidobucho","artistica","coreografia","evaluacion","rubrica","katachi","kimochi"],
-      a: "El área Artística (Shidobucho) está a cargo de Arturo Goya. Planifica ensayos y repertorio, y evalúa a cada miembro con una rúbrica (katachi, kimochi, secuencia, performance). Solo Shidobucho o personas autorizadas por él enseñan o corrigen coreografías, y un baile aprendido debe ser evaluado antes de poder bailarse en presentaciones."
-    },
-    {
-      k: ["finanzas","cuota","pago","mensualidad","deuda"],
-      a: "El área de Finanzas la lleva Alexis Uechi. Las cuotas se definen por año y se pueden pagar anual o mensualmente. Un atraso de 3 meses o más puede considerarte miembro inactivo. Si tienes dificultades para pagar, conversa directamente con el encargado de Finanzas."
-    },
-    {
-      k: ["rrhh","recursos humanos","bienestar","integracion"],
-      a: "El área de Recursos Humanos la lleva Andrea Oshiro. Se encarga de la integración, la cultura del grupo, la gestión de asistencias y el bienestar emocional de los miembros."
-    },
-    {
-      k: ["logistica","instrumento","material","almacen"],
-      a: "El área de Logística la lleva Fernando Silva. Se encarga de que los instrumentos y materiales estén disponibles y en buen estado, hace inventarios y coordina los espacios de ensayo."
-    },
-    {
-      k: ["juniors","niños","transicion","pase de junior"],
-      a: "El área de Juniors la lleva Yuriko Takeuchi. El pase de junior a adulto ocurre al año siguiente de cumplir los 15 años; si alguien de 14 ingresa y cumple 15 ese mismo año, se evalúa a qué grupo entra."
-    },
-    {
-      k: ["whatsapp","comunicacion","anuncio","canal oficial"],
-      a: "El medio oficial de comunicación interna es WhatsApp. Ahí se publican anuncios de presentaciones, avisos de RRHH, recordatorios de pago y invitaciones a aniversarios de otras filiales."
-    },
-    {
-      k: ["uniforme","chaleco","tabi","obi","hachimaki","tekko"],
-      a: "El uniforme completo consta de chaleco, pantalón, tabi o kehan + zapatilla blanca, obi, obi para taiko, saji o hachimaki y tekkos. El chaleco es personal e intransferible y está prohibido modificarlo, prestarlo fuera del grupo o usarlo con fines personales/lucrativos."
-    },
-    {
-      k: ["bachi"],
-      a: "El bachi es personal y debe estar marcado con tu nombre. El básico es blanco; también se permiten rojo con pañoleta, amarillo con rojo y pañoleta, y hadaka bachi (sin forrar). Su largo es referencial a la longitud de tu brazo, del codo a los dedos."
-    },
-    {
-      k: ["falta","sancion","expulsion","suspension","disciplin"],
-      a: "Hay tres niveles: falta leve (llamada de atención verbal; a la 3ª reincidencia pasa a moderada), falta moderada (suspensión temporal según la directiva) y falta grave (expulsión inmediata). El anexo de faltas del reglamento detalla ejemplos de cada nivel."
-    },
-    {
-      k: ["miembro activo","miembro inactivo","shinjin","miembro suspendido","miembro expulsado"],
-      a: "Shinjin es el nuevo miembro durante su primer año ininterrumpido. Miembro activo: sin ausencia injustificada mayor a 3 meses y al día en cuotas. Miembro inactivo: sin participar por más de 3 meses (puede volver coordinando con Shibucho). Miembro suspendido: excluido temporalmente por falta moderada. Miembro expulsado: retirado por falta grave."
-    },
-    {
-      k: ["convivencia","normas de convivencia","respeto"],
-      a: "Las normas de convivencia incluyen: respeto mutuo, escuchar con atención, ser puntual, mantener la limpieza, no discriminar ni usar lenguaje ofensivo, ser tolerante, cuidar el material del grupo y comunicarse de forma honesta y abierta."
-    },
-    {
-      k: ["vestimenta","ropa","que ropa","zapatos","sandalia"],
-      a: "Para los ensayos no se permiten zapatos, sandalias ni jean. Debes asistir con ropa adecuada para bailar."
-    },
-    {
-      k: ["comer","fumar","vapear","alcohol","chicle"],
-      a: "Durante los ensayos está prohibido comer, masticar chicle o caramelos, fumar, vapear, tomar bebidas alcohólicas o asistir en estado etílico o bajo sustancias."
-    },
-    {
-      k: ["otro grupo","eisa","otra agrupacion"],
-      a: "Los miembros de RKMD no pueden integrar o participar en otros grupos de EISA. Solo está permitido bailar para una actividad específica puntual, no para pertenecer a otra agrupación."
-    },
-    {
-      k: ["puntual","llegar","15 minutos"],
-      a: "Se sugiere llegar 15 minutos antes del ensayo, ya que es responsabilidad de todos los miembros llevar y guardar los instrumentos antes y después del ensayo."
-    },
-    {
-      k: ["bajar instrumentos","subir instrumentos","media hora antes","apoyar logistica"],
-      a: "Media hora antes del ensayo, todos apoyamos en bajar los instrumentos para empezar a tiempo. Al terminar el ensayo, también apoyamos en subirlos y guardarlos antes de retirarnos."
-    },
-    {
-      k: ["grupo de ensayo","taikos nuevos","taikos antiguos","shimepas","shinjin taiko","a que grupo pertenezco"],
-      a: "Los ensayos se dividen actualmente en cuatro grupos: Taikos nuevos (shinjin), Taikos antiguos, Nuevos shimepas y Antiguos shimepas. Confirma con Shidobucho o el encargado de ensayo del mes a cuál perteneces."
-    },
-    {
-      k: ["presentacion","salir a bailar","evento"],
-      a: "Solo pueden anotarse a presentaciones los miembros al día (o con atraso máximo de 3 meses) en sus cuotas, y solo bailan quienes hayan sido evaluados y/o autorizados por Shidobucho."
-    },
-  ];
-
-  const FALLBACK = "Esa pregunta está fuera de lo que puedo responder con la información que tengo. Te recomiendo contactar a un miembro de la directiva para que te ayude directamente.";
-  const GREETING = "¡Yoroshiku! Soy un asistente basado en el reglamento y el organigrama de RKMD Lima Centro. Pregúntame sobre horarios, áreas, uniforme, cuotas, faltas, etc.";
-
-  const chatLog = document.getElementById('chatLog');
-  const chatInput = document.getElementById('chatInput');
-  const chatSend = document.getElementById('chatSend');
-  const chatSuggestions = document.getElementById('chatSuggestions');
-
-  function normalize(str){
-    return str.toLowerCase()
-      .normalize('NFD').replace(/[\u0300-\u036f]/g,'') // strip accents
-      .replace(/[¿?¡!.,]/g,'');
-  }
-
-  function addMsg(text, who){
-    const div = document.createElement('div');
-    div.className = 'msg ' + who;
-    div.textContent = text;
-    chatLog.appendChild(div);
-    chatLog.scrollTop = chatLog.scrollHeight;
-  }
-
-  function answer(question){
-    const q = normalize(question);
-    let best = null;
-    let bestScore = 0;
-    KB.forEach(entry=>{
-      entry.k.forEach(keyword=>{
-        const nk = normalize(keyword);
-        if(q.includes(nk)){
-          const score = nk.length; // longer/more specific match wins
-          if(score > bestScore){ bestScore = score; best = entry; }
-        }
-      });
-    });
-    return best ? best.a : FALLBACK;
-  }
-
-  function handleSend(){
-    const val = chatInput.value.trim();
-    if(!val) return;
-    addMsg(val, 'user');
-    chatInput.value = '';
-    setTimeout(()=>{ addMsg(answer(val), 'bot'); }, 250);
-  }
-
-  chatSend.addEventListener('click', handleSend);
-  chatInput.addEventListener('keydown', e=>{ if(e.key==='Enter') handleSend(); });
-
-  const sampleQs = [
-    "¿A qué hora es el ensayo?",
-    "¿Quién es la Shibucho?",
-    "¿Qué necesito para el bachi?",
-    "¿Cómo pago mi cuota?"
-  ];
-  sampleQs.forEach(q=>{
-    const b = document.createElement('button');
-    b.textContent = q;
-    b.addEventListener('click', ()=>{ chatInput.value = q; handleSend(); });
-    chatSuggestions.appendChild(b);
-  });
-
-  addMsg(GREETING, 'bot');
 </script>
 
 </body>
