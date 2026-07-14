@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>De Junior a Adulto — RKMD Lima Centro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#C41E2A;
+    --red-dark:#8E141D;
+    --ink:#241B15;
+    --cream:#FBF3E3;
+    --gold:#EFB93A;
+    --gold-soft:#F6D98A;
+    --paper:#FFFCF6;
+    --line:rgba(36,27,21,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Zen Kaku Gothic New', sans-serif;
+    line-height:1.6;
+  }
+  .taiko-band{
+    height:10px;
+    width:100%;
+    background:repeating-linear-gradient(90deg, var(--red) 0 28px, var(--gold) 28px 56px);
+  }
+  header.top{
+    background:var(--red);
+    color:var(--cream);
+    padding:38px 6vw 30px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.top::after{
+    content:"";
+    position:absolute;
+    right:-60px; top:-60px;
+    width:260px; height:260px;
+    border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, var(--gold-soft) 0%, transparent 70%);
+    opacity:.35;
+  }
+  .eyebrow{
+    font-size:.78rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--gold-soft);
+    font-weight:700;
+    margin:0 0 10px;
+  }
+  h1.title{
+    font-family:'Yuji Syuku', serif;
+    font-size:clamp(2.1rem, 5vw, 3.6rem);
+    margin:0 0 10px;
+    line-height:1.1;
+    position:relative;
+    z-index:1;
+  }
+  .subtitle{
+    max-width:640px;
+    font-size:1.02rem;
+    color:#FBE7CE;
+    position:relative;
+    z-index:1;
+  }
+  nav.tabs{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    background:var(--ink);
+    padding:10px 5vw;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  nav.tabs button{
+    appearance:none;
+    border:none;
+    background:transparent;
+    color:#E9DCC6;
+    font-family:'Zen Kaku Gothic New', sans-serif;
+    font-weight:700;
+    font-size:.92rem;
+    padding:10px 16px;
+    border-radius:999px;
+    cursor:pointer;
+    transition:background .18s ease, color .18s ease;
+    letter-spacing:.01em;
+  }
+  nav.tabs button:hover{ background:rgba(255,255,255,0.08); }
+  nav.tabs button.active{
+    background:var(--gold);
+    color:var(--ink);
+  }
+  main{
+    max-width:900px;
+    margin:0 auto;
+    padding:40px 6vw 90px;
+  }
+  section.panel{ display:none; }
+  section.panel.active{ display:block; animation:fade .35s ease; }
+  @keyframes fade{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
+
+  h2.section-title{
+    font-family:'Yuji Syuku', serif;
+    font-size:1.9rem;
+    color:var(--red-dark);
+    margin:0 0 6px;
+  }
+  .section-lede{ color:#5b4c3f; margin:0 0 28px; max-width:60ch; }
+
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:22px 24px;
+    margin-bottom:18px;
+    box-shadow:0 1px 0 rgba(36,27,21,0.03);
+  }
+  .card h3{ margin:0 0 6px; font-size:1.08rem; color:var(--ink); }
+  .role-tag{
+    display:inline-block;
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    background:var(--gold-soft);
+    color:var(--red-dark);
+    padding:3px 10px;
+    border-radius:999px;
+    margin-bottom:8px;
+  }
+  .card ul{ margin:8px 0 0; padding-left:20px; }
+  .card ul li{ margin-bottom:4px; }
+  .name{ color:var(--red-dark); font-weight:700; }
+
+  /* org chart */
+  .org-wrap{ margin-bottom:34px; }
+  .org-level{ display:flex; justify-content:center; margin-bottom:6px; }
+  .org-node{
+    background:var(--red);
+    color:var(--cream);
+    padding:10px 18px;
+    border-radius:10px;
+    text-align:center;
+    font-weight:700;
+    font-size:.92rem;
+    min-width:150px;
+  }
+  .org-node small{ display:block; font-weight:400; opacity:.85; font-size:.78rem; margin-top:2px;}
+  .org-node.top{ background:var(--ink); }
+  .org-connector{ width:2px; height:22px; background:var(--line); margin:0 auto; }
+  .org-row{
+    display:flex; flex-wrap:wrap; gap:12px; justify-content:center;
+  }
+  .org-row .org-node{ background:var(--gold); color:var(--ink); flex:1 1 150px; max-width:180px; }
+
+  /* accordion for reglamento */
+  details.acc{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:12px;
+    margin-bottom:12px;
+    overflow:hidden;
+  }
+  details.acc > summary{
+    cursor:pointer;
+    list-style:none;
+    padding:16px 20px;
+    font-weight:700;
+    color:var(--red-dark);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  details.acc > summary::-webkit-details-marker{ display:none; }
+  details.acc > summary::after{
+    content:"+";
+    font-size:1.3rem;
+    color:var(--gold);
+    transform:translateY(-1px);
+  }
+  details.acc[open] > summary::after{ content:"–"; }
+  .acc-body{ padding:0 20px 18px; color:#3d332a; }
+  .acc-body ul{ padding-left:20px; }
+  .acc-body li{ margin-bottom:6px; }
+  .acc-body h4{ margin:14px 0 6px; color:var(--ink); font-size:.98rem; }
+
+  table.faltas{ width:100%; border-collapse:collapse; font-size:.9rem; margin-top:8px;}
+  table.faltas th, table.faltas td{ border:1px solid var(--line); padding:8px 10px; text-align:left; vertical-align:top;}
+  table.faltas th{ background:var(--gold-soft); color:var(--ink); }
+  .grado{ font-weight:700; padding:2px 8px; border-radius:6px; font-size:.78rem; display:inline-block;}
+  .grado.grave{ background:var(--red); color:#fff; }
+  .grado.moderado{ background:#E8956B; color:#2b1c12; }
+  .grado.leve{ background:var(--gold-soft); color:var(--ink); }
+
+  .callout{
+    border-left:5px solid var(--gold);
+    background:#FFF7E4;
+    padding:14px 18px;
+    border-radius:0 10px 10px 0;
+    margin:18px 0;
+  }
+  .callout.red{ border-color:var(--red); background:#FBEAEA; }
+
+  /* chatbot */
+  .chat-shell{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:16px;
+    overflow:hidden;
+  }
+  .chat-log{
+    height:380px;
+    overflow-y:auto;
+    padding:20px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    background:
+      radial-gradient(circle at 90% 10%, rgba(196,30,42,0.04), transparent 40%),
+      #FFFDF8;
+  }
+  .msg{ max-width:82%; padding:10px 14px; border-radius:14px; font-size:.94rem; }
+  .msg.bot{ background:#F1E6CE; color:var(--ink); align-self:flex-start; border-bottom-left-radius:4px; }
+  .msg.user{ background:var(--red); color:#fff; align-self:flex-end; border-bottom-right-radius:4px; }
+  .chat-input-row{
+    display:flex; gap:8px; padding:14px; border-top:1px solid var(--line); background:var(--paper);
+  }
+  .chat-input-row input{
+    flex:1;
+    padding:11px 14px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    font-family:inherit;
+    font-size:.95rem;
+    background:#fff;
+  }
+  .chat-input-row input:focus{ outline:2px solid var(--gold); }
+  .chat-input-row button{
+    background:var(--red);
+    color:#fff;
+    border:none;
+    border-radius:999px;
+    padding:0 20px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .chat-input-row button:hover{ background:var(--red-dark); }
+  .suggestions{ display:flex; flex-wrap:wrap; gap:8px; padding:0 20px 16px; }
+  .suggestions button{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:999px;
+    padding:6px 12px;
+    font-size:.8rem;
+    cursor:pointer;
+    color:var(--red-dark);
+  }
+  .suggestions button:hover{ background:var(--gold-soft); }
+
+  footer{
+    text-align:center;
+    padding:26px;
+    color:#7a6a58;
+    font-size:.85rem;
+  }
+  @media (max-width:560px){
+    nav.tabs{ overflow-x:auto; flex-wrap:nowrap; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <p class="eyebrow">RKMD · Filial Lima Centro</p>
+  <h1 class="title">De Junior a Adulto</h1>
+  <p class="subtitle">Estás por dejar el grupo de Juniors y unirte al grupo de adultos. Este manual reúne todo lo que necesitas saber: quién es quién, las normas del grupo y los aspectos clave del día a día. Yoroshiku onegaishimasu 🥁</p>
+</header>
+<div class="taiko-band"></div>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="inicio">Inicio</button>
+  <button class="tab-btn" data-tab="organigrama">Organigrama</button>
+  <button class="tab-btn" data-tab="reglamento">Reglamento</button>
+  <button class="tab-btn" data-tab="importante">Aspectos clave</button>
+  <button class="tab-btn" data-tab="chatbot">Chatea con Taki 🥁</button>
+</nav>
+
+<main>
+
+  <!-- INICIO -->
+  <section class="panel active" id="inicio">
+    <h2 class="section-title">Bienvenido/a al grupo de adultos</h2>
+    <p class="section-lede">Pasar de juniors a adultos no es solo cumplir años: es asumir más responsabilidad, más autonomía y más compromiso con el grupo. Aquí tienes un resumen de qué va a cambiar.</p>
+
+    <div class="card">
+      <h3>¿Qué cambia?</h3>
+      <ul>
+        <li>Ensayas los sábados de <strong>8pm a 10pm</strong> en AELU (antes eran 7pm–8pm como junior).</li>
+        <li>Ya no necesitas venir acompañado de un padre, madre o apoderado durante el ensayo.</li>
+        <li>Pasas a tener el mismo reglamento, tarifas y responsabilidades que cualquier miembro adulto.</li>
+        <li>Puedes empezar a salir en presentaciones oficiales una vez que Shidobucho evalúe y autorice tu participación.</li>
+        <li>Sigues siendo <strong>shinjin</strong> (nuevo miembro) durante tu primer año ininterrumpido en el grupo de adultos.</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      Este manual no reemplaza al Reglamento oficial de RKMD Lima Centro (pestaña "Reglamento"): es un resumen para orientarte. Ante cualquier duda que no encuentres aquí, pregunta a un miembro de la directiva.
+    </div>
+
+    <div class="card">
+      <h3>Cómo usar este manual</h3>
+      <ul>
+        <li><strong>Organigrama:</strong> quién dirige cada área y qué hace cada una.</li>
+        <li><strong>Reglamento:</strong> el reglamento completo de la filial, organizado por temas.</li>
+        <li><strong>Cosas importantes:</strong> detalles del día a día que todo miembro nuevo debe saber.</li>
+        <li><strong>Preguntale al Shidoin:</strong> un chatbot para resolver dudas rápidas basado en este mismo contenido.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ORGANIGRAMA -->
+  <section class="panel" id="organigrama">
+    <h2 class="section-title">Organigrama 2026–2027</h2>
+    <p class="section-lede">Así está organizada la directiva de la filial. Cada área tiene objetivos y funciones propias, pero todas trabajan en conjunto.</p>
+
+    <div class="org-wrap">
+      <div class="org-level"><div class="org-node top">Shibucho<br><small>Mayumi Oshiro</small></div></div>
+      <div class="org-connector"></div>
+      <div class="org-level"><div class="org-node top" style="background:var(--red-dark)">Fuku Shibucho<br><small>Yuriko Takeuchi</small></div></div>
+      <div class="org-connector"></div>
+      <div class="org-row">
+        <div class="org-node">Finanzas<br><small>Alexis Uechi</small></div>
+        <div class="org-node">Shidobucho (Artística)<br><small>Arturo Goya</small></div>
+        <div class="org-node">HR<br><small>Andrea Oshiro</small></div>
+        <div class="org-node">Logística<br><small>Fernando Silva</small></div>
+        <div class="org-node">Juniors<br><small>Yuriko Takeuchi</small></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="role-tag">Dirección</span>
+      <h3>Shibucho — <span class="name">Mayumi Oshiro</span></h3>
+      <p>Dirige a todo el grupo. Asegura el desarrollo artístico, humano y organizacional, unifica criterios entre áreas y representa a la filial frente a instituciones externas. Es quien aprueba actividades de alto impacto y resuelve conflictos entre áreas.</p>
+    </div>
+
+    <div class="card">
+      <span class="role-tag">Dirección</span>
+      <h3>Fuku Shibucho — <span class="name">Yuriko Takeuchi</span></h3>
+      <p>Apoya al Shibucho y aprende de todas las áreas para tener una visión global del grupo. Da seguimiento a los objetivos generales, sirve de nexo imparcial entre áreas y lidera proyectos especiales.</p>
+    </div>
+
+    <div class="card">
+      <span class="role-tag">Finanzas</span>
+      <h3><span class="name">Alexis Uechi</span></h3>
+      <p>Cuida la salud financiera del grupo: elabora el presupuesto anual, controla ingresos y egresos, gestiona la recaudación de cuotas y proyecta cómo cubrir gastos (incluyendo actividades pro-fondos).</p>
+    </div>
+
+    <div class="card">
+      <span class="role-tag">Artística</span>
+      <h3>Shidobucho — <span class="name">Arturo Goya</span></h3>
+      <p>Responsable de todo lo artístico: planifica el cronograma de ensayos y el repertorio de canciones, evalúa el desarrollo técnico de cada miembro (katachi, kimochi, secuencia, performance) y organiza las presentaciones. Es quien autoriza y corrige las coreografías.</p>
+    </div>
+
+    <div class="card">
+      <span class="role-tag">Recursos Humanos</span>
+      <h3><span class="name">Andrea Oshiro</span></h3>
+      <p>Vela por el bienestar y la convivencia del grupo: gestiona asistencias, organiza actividades de integración y celebraciones, y mapea el estado emocional del grupo (encuestas, feedbacks, estiramientos/calentamientos).</p>
+    </div>
+
+    <div class="card">
+      <span class="role-tag">Logística</span>
+      <h3><span class="name">Fernando Silva</span></h3>
+      <p>Garantiza que los instrumentos y materiales estén disponibles y en buen estado: hace inventarios, mantenimiento preventivo y correctivo, y coordina los espacios para ensayos y presentaciones.</p>
+    </div>
+
+    <div class="card">
+      <span class="role-tag">Juniors</span>
+      <h3><span class="name">Yuriko Takeuchi</span></h3>
+      <p>A cargo del grupo de niños: cumple el plan de ensayos, forma shidoines (miembros que enseñan a los niños), educa a los padres de familia y guía el proceso de transición de junior a adulto — como el tuyo.</p>
+    </div>
+  </section>
+
+  <!-- REGLAMENTO -->
+  <section class="panel" id="reglamento">
+    <h2 class="section-title">Reglamento RKMD Lima Centro</h2>
+    <p class="section-lede">El reglamento completo, organizado por temas. Alcanza a todos los miembros sin distinción — como miembro adulto, estás obligado a conocerlo y cumplirlo.</p>
+
+    <details class="acc" open>
+      <summary>I–II. Propósito y definiciones clave</summary>
+      <div class="acc-body">
+        <p>El reglamento establece las normas que regulan el comportamiento, operaciones e interacciones dentro de la filial, buscando un ambiente ordenado, seguro, respetuoso y equitativo.</p>
+        <h4>Cargos</h4>
+        <ul>
+          <li><strong>Honbu:</strong> matriz de Okinawa sobre la cual se rige RKMD.</li>
+          <li><strong>Chikucho / Fuku chikucho:</strong> director(a) / subdirector(a) a nivel país.</li>
+          <li><strong>Shibucho / Fuku Shibucho:</strong> director(a) / subdirector(a) de la filial.</li>
+          <li><strong>Shidobucho:</strong> encargado(a) de la parte artística.</li>
+        </ul>
+        <h4>Frases cotidianas en japonés</h4>
+        <ul>
+          <li><strong>Yoroshiku onegaishimasu:</strong> antes de empezar el ensayo.</li>
+          <li><strong>Otsukaresamadeshita / Otsukare:</strong> al terminar el ensayo o evento.</li>
+          <li><strong>Omedetou gozaimashita:</strong> felicitar de forma formal (presentaciones).</li>
+          <li><strong>Arigatou gozaimashita:</strong> agradecer de forma formal (presentaciones).</li>
+          <li><strong>Onegaishimasu / Onegai:</strong> pedir de forma formal, antes de una canción.</li>
+          <li><strong>Rei (礼):</strong> reverencia.</li>
+          <li><strong>Kiotsuke (気を付け):</strong> "atención" o firmes.</li>
+          <li><strong>Kimochi (気持ち):</strong> sentimiento.</li>
+          <li><strong>Shuugo (主語):</strong> llamado a reunión rápida.</li>
+          <li><strong>Yooi (用意):</strong> "preparados".</li>
+          <li><strong>Shidoin (指導):</strong> persona que enseña o instructor.</li>
+        </ul>
+        <h4>Instrumentos</h4>
+        <p>Taiko (odaiko, chudaiko, kodaiko), paranku, dekapa, shime daiko, sanba, bachi (rojo, blanco, hadaka bachi, para yotsudake), obi, narukos, bo, ogi.</p>
+        <h4>Pasos de baile</h4>
+        <p><strong>Shu:</strong> brazo izquierdo doblado a la altura de la frente, brazo derecho estirado con el bachi. <strong>Nagashi:</strong> equilibrio en una pierna, brazo derecho estirado. <strong>Bachimawashi:</strong> paso básico del eisa, pasar el bachi alrededor de la cabeza antes de golpear el instrumento.</p>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary>III. Miembros de la organización</summary>
+      <div class="acc-body">
+        <h4>Tipo de miembros</h4>
+        <ul>
+          <li><strong>Juniors:</strong> niños y adolescentes de 7 a 14 años. El pase a adulto se hace al año siguiente de cumplir 15.</li>
+          <li><strong>Adultos:</strong> desde los 15 años en adelante.</li>
+        </ul>
+        <h4>Categoría de miembros</h4>
+        <ul>
+          <li><strong>Shinjin (nuevo miembro):</strong> se mantiene durante 1 año ininterrumpido de permanencia.</li>
+          <li><strong>Miembro activo:</strong> sin ausencia injustificada mayor a 3 meses y al día en cuotas.</li>
+          <li><strong>Miembro inactivo (ex-miembro):</strong> sin participar por más de 3 meses; puede volver previa coordinación con Shibucho y regularizando su deuda.</li>
+          <li><strong>Miembro suspendido:</strong> excluido temporalmente por falta moderada o reincidencia; solo la directiva vigente puede levantar la suspensión.</li>
+          <li><strong>Miembro expulsado:</strong> retirado del grupo por cometer una falta grave (acciones contra la integridad moral/ética o que perjudiquen la imagen del grupo).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary>IV. Proceso de convocatoria e inscripción</summary>
+      <div class="acc-body">
+        <p>El ingreso de nuevos miembros solo ocurre en convocatorias (abiertas o internas) que decide lanzar la directiva vigente, con condiciones, tiempos y medios que ella misma determina. Las convocatorias de juniors y de adultos son independientes.</p>
+        <h4>Documentos para ingresar</h4>
+        <ul>
+          <li>Certijoven o Certiadulto.</li>
+          <li>Consentimiento de padres/apoderados (si es menor de edad).</li>
+          <li>Formulario de inscripción.</li>
+          <li>Ficha de autorización de derechos de uso de imagen para redes sociales.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary>V. Ensayo — horarios, convivencia y tarifas</summary>
+      <div class="acc-body">
+        <h4>Horarios regulares</h4>
+        <ul>
+          <li>Adultos: sábados de 8pm a 10pm en AELU.</li>
+          <li>Juniors: sábados de 7pm a 8pm en AELU.</li>
+          <li>El horario/lugar puede variar según disponibilidad; cualquier cambio lo comunica la directiva.</li>
+        </ul>
+        <h4>Normas de convivencia en ensayos</h4>
+        <ul>
+          <li>Respetar a todos los miembros y escuchar al shidoin.</li>
+          <li>Avisar al Shidobucho si necesitas retirarte antes de terminar.</li>
+          <li>Mantener el orden y la limpieza del lugar.</li>
+          <li>Cero discriminación, antes, durante y después del ensayo.</li>
+          <li>Ropa adecuada: nada de zapatos, sandalias o jean.</li>
+          <li>No comer, no masticar chicle/caramelos, no fumar, vapear ni beber alcohol durante el ensayo; no asistir en estado etílico o bajo sustancias.</li>
+          <li>Ser puntual — se sugiere llegar 15 minutos antes para ayudar con los instrumentos.</li>
+          <li>Hacer el rei (reverencia) al inicio y al final; todo ensayo empieza y termina con un shuugo.</li>
+          <li>No ingresar a bailar una canción que ya empezó.</li>
+        </ul>
+        <h4>Consideraciones dentro del ensayo</h4>
+        <ul>
+          <li>Las coreografías solo las enseña o corrige el Shidobucho o personas autorizadas por él.</li>
+          <li>Se debe dominar la coreografía en modalidad taiko (adultos) antes que otras modalidades.</li>
+          <li>Estiramiento pre y post ensayo es responsabilidad de cada uno.</li>
+          <li>La agrupación no se responsabiliza por incidentes; cada miembro cuida su salud, pertenencias e integridad.</li>
+        </ul>
+        <h4>Tarifas y pagos</h4>
+        <ul>
+          <li>Las cuotas, eventos y donaciones cubren gastos generales (alquileres, mantenimiento, transporte, integración, etc).</li>
+          <li>La cuota se define por año y puede pagarse anual o mensualmente.</li>
+          <li>Atrasarse 3 meses o más en el pago puede llevar a ser considerado miembro inactivo.</li>
+          <li>Quien no sea socio de AELU paga el ingreso que fija la asociación.</li>
+          <li>Los gastos de movilidad y traslado de materiales a presentaciones los asume la agrupación.</li>
+          <li>Si tienes dificultades para pagar, conversa con el encargado de Finanzas.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary>VI. Presentaciones — miembros, uniforme y bachi</summary>
+      <div class="acc-body">
+        <h4>Miembros participantes</h4>
+        <ul>
+          <li>Solo pueden anotarse quienes estén al día o con un atraso máximo de 3 meses en sus mensualidades.</li>
+          <li>Solo bailan los miembros activos evaluados y/o autorizados por Shidobucho.</li>
+          <li>Se debe llevar el uniforme completo (taiko, shime y paranku), bachis y obis para taikos.</li>
+          <li>No se permiten accesorios (aretes, collares, pulseras, anillos, relojes, piercings).</li>
+          <li>Maquillaje natural; uñas sin pintar; tatuajes visibles deben cubrirse; se recomienda evitar lentes, bigote y barba.</li>
+        </ul>
+        <h4>Uniforme</h4>
+        <ul>
+          <li>Consta de chaleco, pantalón, tabi o kehan + zapatilla blanca, obi, obi para taiko, saji o hachimaki, y tekkos.</li>
+          <li>El chaleco es personal e intransferible.</li>
+          <li>Prohibido: alcohol/fumar/vapear con el uniforme puesto, usarlo con fines personales o lucrativos, prestarlo fuera del grupo, y modificar sus elementos.</li>
+        </ul>
+        <h4>Bachi</h4>
+        <ul>
+          <li>Es personal y debe estar marcado con tu nombre; el básico es blanco.</li>
+          <li>Colores permitidos: blanco, rojo con pañoleta, amarillo con rojo y pañoleta, y hadaka bachi (sin forrar).</li>
+          <li>El largo es referencial a la longitud de tu brazo (del codo a los dedos).</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary>VII–VIII. Prohibiciones, faltas y disposiciones finales</summary>
+      <div class="acc-body">
+        <ul>
+          <li>Los miembros de RKMD no pueden integrar otros grupos de EISA (solo se permite bailar para una actividad puntual, no para otra agrupación).</li>
+          <li>Prohibido cualquier forma de acoso, violencia o daño físico, psicológico o emocional.</li>
+          <li>Está prohibido usar el nombre, imagen o logo de la agrupación con fines personales o lucrativos; para estudios/investigaciones se necesita autorización del chikucho.</li>
+        </ul>
+        <h4>Medidas disciplinarias</h4>
+        <ul>
+          <li><strong>Falta leve:</strong> llamada de atención verbal inmediata; si reincide una 3ª vez, pasa a moderada.</li>
+          <li><strong>Falta moderada:</strong> suspensión temporal según lo señale la directiva.</li>
+          <li><strong>Falta grave:</strong> expulsión inmediata de la agrupación.</li>
+        </ul>
+        <h4>Anexo de faltas</h4>
+        <table class="faltas">
+          <tr><th>Tema</th><th>Detalle</th><th>Grado</th></tr>
+          <tr><td rowspan="5">Conductas generales</td><td>Conductas inapropiadas (obscenas, discriminatorias, acoso)</td><td><span class="grado grave">Grave</span></td></tr>
+          <tr><td>Agresión física y/o verbal</td><td><span class="grado grave">Grave</span></td></tr>
+          <tr><td>Consumo de alcohol y/o drogas</td><td><span class="grado grave">Grave</span></td></tr>
+          <tr><td>Uso de armas</td><td><span class="grado grave">Grave</span></td></tr>
+          <tr><td>Incumplir normas de convivencia</td><td><span class="grado leve">Leve</span></td></tr>
+          <tr><td>Conductas generales</td><td>Robo o hurto de pertenencias</td><td><span class="grado grave">Grave</span></td></tr>
+          <tr><td rowspan="3">Internacional</td><td>Participar en filiales extranjeras sin autorización</td><td><span class="grado grave">Grave</span></td></tr>
+          <tr><td>Incumplir el cronograma de la organización/filial</td><td><span class="grado grave">Grave</span></td></tr>
+          <tr><td>Incumplir normas de la filial anfitriona</td><td><span class="grado grave">Grave</span></td></tr>
+          <tr><td rowspan="6">Imagen y reputación</td><td>Uso indebido de información/material (carné, instrumentos, coreografía, etc.)</td><td><span class="grado moderado">Moderado</span></td></tr>
+          <tr><td>Usar el nombre/material del grupo para beneficio propio</td><td><span class="grado grave">Grave</span></td></tr>
+          <tr><td>No respetar el reglamento</td><td><span class="grado leve">Leve</span></td></tr>
+          <tr><td>Dañar públicamente la imagen del grupo</td><td><span class="grado grave">Grave</span></td></tr>
+          <tr><td>Suplantar un cargo directivo para toma de decisión</td><td><span class="grado grave">Grave</span></td></tr>
+          <tr><td>Faltas con reincidencia</td><td><span class="grado grave">Grave</span></td></tr>
+        </table>
+        <p style="margin-top:10px; font-size:.85rem; color:#6b5c4c;">Leyenda: <strong>Grave</strong> afecta fuertemente al grupo o persona · <strong>Moderado</strong> acumulación de faltas leves o malestar en el grupo · <strong>Leve</strong> incumplimiento corregible. Los grados están sujetos al consenso de la directiva en curso.</p>
+      </div>
+    </details>
+
+    <details class="acc">
+      <summary>Normas de convivencia (resumen)</summary>
+      <div class="acc-body">
+        <ul>
+          <li>Respeto mutuo y escucha activa.</li>
+          <li>Puntualidad y limpieza del espacio.</li>
+          <li>No discriminar ni usar lenguaje ofensivo; ser tolerante con las diferencias.</li>
+          <li>Responsabilidad con la asistencia y los roles asignados.</li>
+          <li>Cuidado de instrumentos, vestuario y equipos.</li>
+          <li>Comunicación honesta y abierta para resolver problemas.</li>
+          <li>Cumplir las normas del reglamento.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- IMPORTANTE -->
+  <section class="panel" id="importante">
+    <h2 class="section-title">Aspectos clave del día a día</h2>
+    <p class="section-lede">Lo que todo miembro nuevo del grupo de adultos debería saber desde el primer ensayo.</p>
+
+    <div class="card">
+      <span class="role-tag">Artística</span>
+      <h3>Grupos de ensayo actuales</h3>
+      <p>Actualmente los ensayos se dividen en grupos según instrumento y antigüedad:</p>
+      <ul>
+        <li><strong>Taikos nuevos (shinjin):</strong> el grupo al que perteneces al ingresar como taiko.</li>
+        <li><strong>Taikos antiguos.</strong></li>
+        <li><strong>Nuevos shimepas.</strong></li>
+        <li><strong>Antiguos shimepas.</strong></li>
+      </ul>
+      <p>Confirma con Shidobucho o con el encargado de ensayo del mes a qué grupo perteneces y qué se trabaja en cada sesión.</p>
+    </div>
+
+    <div class="card">
+      <span class="role-tag">Comunicación</span>
+      <h3>WhatsApp es nuestro canal oficial</h3>
+      <p>Ahí se dan los anuncios de presentaciones, avisos de Recursos Humanos, recordatorios sobre el pago de la mensualidad, invitaciones a aniversarios de otras filiales, y cualquier otro anuncio oficial. Revísalo con frecuencia para no quedarte fuera de algo importante.</p>
+    </div>
+
+    <div class="card">
+      <span class="role-tag">Artística</span>
+      <h3>Encargado de ensayo mensual</h3>
+      <p>Cada mes hay un/a encargado/a de ensayo distinto, designado por el área de Artística. Esa persona apoya en la conducción del ensayo del mes.</p>
+    </div>
+
+    <div class="card">
+      <span class="role-tag">Artística</span>
+      <h3>Baile aprendido ≠ baile evaluado</h3>
+      <p>Aprender una coreografía es solo el primer paso. Para poder bailarla en una presentación, primero debe ser <strong>evaluada con una rúbrica</strong> por Shidobucho, según lo indicado en el reglamento (evaluación individual de katachi, kimochi, secuencia y performance).</p>
+    </div>
+
+    <div class="card">
+      <span class="role-tag">Finanzas</span>
+      <h3>Cuotas mensuales</h3>
+      <p>Todos los miembros deben estar al día con sus cuotas. Si tienes dificultades para pagar, conversa directamente con el encargado del área de Finanzas — no dejes que la deuda se acumule, porque un atraso de 3 meses o más puede llevarte a la categoría de miembro inactivo.</p>
+    </div>
+
+    <div class="card">
+      <span class="role-tag">Logística</span>
+      <h3>Apoyo en bajar los instrumentos</h3>
+      <p>Media hora antes del ensayo, todos debemos apoyar en bajar los instrumentos para poder empezar a tiempo. Al término del ensayo, el apoyo es el mismo: todos ayudamos a subir y guardar los instrumentos antes de retirarnos.</p>
+    </div>
+
+    <div class="card">
+      <span class="role-tag">Logística</span>
+      <h3>Cuida el material del grupo</h3>
+      <p>Todos somos responsables de llevar, cuidar y guardar los instrumentos que usamos en cada ensayo o presentación. Si notas algún daño o problema con el material, avisa al encargado de Logística.</p>
+    </div>
+
+    <div class="card">
+      <span class="role-tag">RRHH</span>
+      <h3>Tu bienestar también importa</h3>
+      <p>El área de RRHH se encarga de la integración, la cultura del grupo y de mapear cómo se sienten los miembros. Si algo te incomoda o necesitas apoyo, puedes acudir a RRHH; los problemas que no se resuelvan ahí escalan a Shibucho.</p>
+    </div>
+
+    <div class="callout red">
+      <strong>Recuerda:</strong> como adulto ya no necesitas venir acompañado de un familiar al ensayo, pero sí sigues bajo el mismo reglamento que todos — puntualidad, uniforme, cuidado del material y respeto son responsabilidad de cada uno.
+    </div>
+  </section>
+
+  <!-- CHATBOT -->
+  <section class="panel" id="chatbot">
+    <h2 class="section-title">Chatea con Taki</h2>
+    <p class="section-lede">Taki es un asistente sencillo que responde según el reglamento y el organigrama de RKMD Lima Centro. Si la pregunta está fuera de lo que sabe, te lo dirá — no inventa respuestas.</p>
+
+    <div class="chat-shell">
+      <div class="chat-log" id="chatLog"></div>
+      <div class="suggestions" id="chatSuggestions"></div>
+      <div class="chat-input-row">
+        <input type="text" id="chatInput" placeholder="Escribe tu pregunta, por ejemplo: ¿a qué hora es el ensayo?" autocomplete="off">
+        <button id="chatSend">Enviar</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>RKMD Lima Centro · Manual de inducción para el paso de Juniors a Adultos · #Ganbatte #ConFe</footer>
+
+<script>
+  // ---------- Tabs ----------
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.panel');
+  tabButtons.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      tabButtons.forEach(b=>b.classList.remove('active'));
+      panels.forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ---------- Chatbot knowledge base ----------
+  // Each entry: keywords (all lowercase, no accents needed exactly, matched loosely) + answer.
+  const KB = [
+    {
+      k: ["hora ensayo","horario ensayo","cuando ensay","que hora","hora del ensayo"],
+      a: "Los ensayos de adultos son los sábados de 8pm a 10pm en la Asociación Estadio La Unión (AELU). El horario o lugar puede variar según disponibilidad; cualquier cambio lo comunica la directiva."
+    },
+    {
+      k: ["ensayo junior","hora junior","horario junior"],
+      a: "Los ensayos de juniors son los sábados de 7pm a 8pm en AELU."
+    },
+    {
+      k: ["shibucho","quien dirige","quien es el director","directora"],
+      a: "La Shibucho (directora de la filial) es Mayumi Oshiro. Dirige al grupo, unifica criterios entre áreas y representa a la filial ante instituciones externas."
+    },
+    {
+      k: ["fuku shibucho","subdirector"],
+      a: "La Fuku Shibucho (subdirectora) es Yuriko Takeuchi. Apoya al Shibucho, da seguimiento a los objetivos generales y es nexo entre áreas."
+    },
+    {
+      k: ["shidobucho","artistica","coreografia","evaluacion","rubrica","katachi","kimochi"],
+      a: "El área Artística (Shidobucho) está a cargo de Arturo Goya. Planifica ensayos y repertorio, y evalúa a cada miembro con una rúbrica (katachi, kimochi, secuencia, performance). Solo Shidobucho o personas autorizadas por él enseñan o corrigen coreografías, y un baile aprendido debe ser evaluado antes de poder bailarse en presentaciones."
+    },
+    {
+      k: ["finanzas","cuota","pago","mensualidad","deuda"],
+      a: "El área de Finanzas la lleva Alexis Uechi. Las cuotas se definen por año y se pueden pagar anual o mensualmente. Un atraso de 3 meses o más puede considerarte miembro inactivo. Si tienes dificultades para pagar, conversa directamente con el encargado de Finanzas."
+    },
+    {
+      k: ["rrhh","recursos humanos","bienestar","integracion"],
+      a: "El área de Recursos Humanos la lleva Andrea Oshiro. Se encarga de la integración, la cultura del grupo, la gestión de asistencias y el bienestar emocional de los miembros."
+    },
+    {
+      k: ["logistica","instrumento","material","almacen"],
+      a: "El área de Logística la lleva Fernando Silva. Se encarga de que los instrumentos y materiales estén disponibles y en buen estado, hace inventarios y coordina los espacios de ensayo."
+    },
+    {
+      k: ["juniors","niños","transicion","pase de junior"],
+      a: "El área de Juniors la lleva Yuriko Takeuchi. El pase de junior a adulto ocurre al año siguiente de cumplir los 15 años; si alguien de 14 ingresa y cumple 15 ese mismo año, se evalúa a qué grupo entra."
+    },
+    {
+      k: ["whatsapp","comunicacion","anuncio","canal oficial"],
+      a: "El medio oficial de comunicación interna es WhatsApp. Ahí se publican anuncios de presentaciones, avisos de RRHH, recordatorios de pago y invitaciones a aniversarios de otras filiales."
+    },
+    {
+      k: ["uniforme","chaleco","tabi","obi","hachimaki","tekko"],
+      a: "El uniforme completo consta de chaleco, pantalón, tabi o kehan + zapatilla blanca, obi, obi para taiko, saji o hachimaki y tekkos. El chaleco es personal e intransferible y está prohibido modificarlo, prestarlo fuera del grupo o usarlo con fines personales/lucrativos."
+    },
+    {
+      k: ["bachi"],
+      a: "El bachi es personal y debe estar marcado con tu nombre. El básico es blanco; también se permiten rojo con pañoleta, amarillo con rojo y pañoleta, y hadaka bachi (sin forrar). Su largo es referencial a la longitud de tu brazo, del codo a los dedos."
+    },
+    {
+      k: ["falta","sancion","expulsion","suspension","disciplin"],
+      a: "Hay tres niveles: falta leve (llamada de atención verbal; a la 3ª reincidencia pasa a moderada), falta moderada (suspensión temporal según la directiva) y falta grave (expulsión inmediata). El anexo de faltas del reglamento detalla ejemplos de cada nivel."
+    },
+    {
+      k: ["miembro activo","miembro inactivo","shinjin","miembro suspendido","miembro expulsado"],
+      a: "Shinjin es el nuevo miembro durante su primer año ininterrumpido. Miembro activo: sin ausencia injustificada mayor a 3 meses y al día en cuotas. Miembro inactivo: sin participar por más de 3 meses (puede volver coordinando con Shibucho). Miembro suspendido: excluido temporalmente por falta moderada. Miembro expulsado: retirado por falta grave."
+    },
+    {
+      k: ["convivencia","normas de convivencia","respeto"],
+      a: "Las normas de convivencia incluyen: respeto mutuo, escuchar con atención, ser puntual, mantener la limpieza, no discriminar ni usar lenguaje ofensivo, ser tolerante, cuidar el material del grupo y comunicarse de forma honesta y abierta."
+    },
+    {
+      k: ["vestimenta","ropa","que ropa","zapatos","sandalia"],
+      a: "Para los ensayos no se permiten zapatos, sandalias ni jean. Debes asistir con ropa adecuada para bailar."
+    },
+    {
+      k: ["comer","fumar","vapear","alcohol","chicle"],
+      a: "Durante los ensayos está prohibido comer, masticar chicle o caramelos, fumar, vapear, tomar bebidas alcohólicas o asistir en estado etílico o bajo sustancias."
+    },
+    {
+      k: ["otro grupo","eisa","otra agrupacion"],
+      a: "Los miembros de RKMD no pueden integrar o participar en otros grupos de EISA. Solo está permitido bailar para una actividad específica puntual, no para pertenecer a otra agrupación."
+    },
+    {
+      k: ["puntual","llegar","15 minutos"],
+      a: "Se sugiere llegar 15 minutos antes del ensayo, ya que es responsabilidad de todos los miembros llevar y guardar los instrumentos antes y después del ensayo."
+    },
+    {
+      k: ["bajar instrumentos","subir instrumentos","media hora antes","apoyar logistica"],
+      a: "Media hora antes del ensayo, todos apoyamos en bajar los instrumentos para empezar a tiempo. Al terminar el ensayo, también apoyamos en subirlos y guardarlos antes de retirarnos."
+    },
+    {
+      k: ["grupo de ensayo","taikos nuevos","taikos antiguos","shimepas","shinjin taiko","a que grupo pertenezco"],
+      a: "Los ensayos se dividen actualmente en cuatro grupos: Taikos nuevos (shinjin), Taikos antiguos, Nuevos shimepas y Antiguos shimepas. Confirma con Shidobucho o el encargado de ensayo del mes a cuál perteneces."
+    },
+    {
+      k: ["presentacion","salir a bailar","evento"],
+      a: "Solo pueden anotarse a presentaciones los miembros al día (o con atraso máximo de 3 meses) en sus cuotas, y solo bailan quienes hayan sido evaluados y/o autorizados por Shidobucho."
+    },
+  ];
+
+  const FALLBACK = "Esa pregunta está fuera de lo que puedo responder con la información que tengo. Te recomiendo contactar a un miembro de la directiva para que te ayude directamente.";
+  const GREETING = "¡Yoroshiku! Soy Taki 🥁, un asistente basado en el reglamento y el organigrama de RKMD Lima Centro. Pregúntame sobre horarios, áreas, uniforme, cuotas, faltas, etc.";
+
+  const chatLog = document.getElementById('chatLog');
+  const chatInput = document.getElementById('chatInput');
+  const chatSend = document.getElementById('chatSend');
+  const chatSuggestions = document.getElementById('chatSuggestions');
+
+  function normalize(str){
+    return str.toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'') // strip accents
+      .replace(/[¿?¡!.,]/g,'');
+  }
+
+  function addMsg(text, who){
+    const div = document.createElement('div');
+    div.className = 'msg ' + who;
+    div.textContent = text;
+    chatLog.appendChild(div);
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
+  function answer(question){
+    const q = normalize(question);
+    let best = null;
+    let bestScore = 0;
+    KB.forEach(entry=>{
+      entry.k.forEach(keyword=>{
+        const nk = normalize(keyword);
+        if(q.includes(nk)){
+          const score = nk.length; // longer/more specific match wins
+          if(score > bestScore){ bestScore = score; best = entry; }
+        }
+      });
+    });
+    return best ? best.a : FALLBACK;
+  }
+
+  function handleSend(){
+    const val = chatInput.value.trim();
+    if(!val) return;
+    addMsg(val, 'user');
+    chatInput.value = '';
+    setTimeout(()=>{ addMsg(answer(val), 'bot'); }, 250);
+  }
+
+  chatSend.addEventListener('click', handleSend);
+  chatInput.addEventListener('keydown', e=>{ if(e.key==='Enter') handleSend(); });
+
+  const sampleQs = [
+    "¿A qué hora es el ensayo?",
+    "¿Quién es la Shibucho?",
+    "¿Qué necesito para el bachi?",
+    "¿Cómo pago mi cuota?"
+  ];
+  sampleQs.forEach(q=>{
+    const b = document.createElement('button');
+    b.textContent = q;
+    b.addEventListener('click', ()=>{ chatInput.value = q; handleSend(); });
+    chatSuggestions.appendChild(b);
+  });
+
+  addMsg(GREETING, 'bot');
+</script>
+
+</body>
+</html>
