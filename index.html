@@ -292,7 +292,7 @@
   <button class="tab-btn" data-tab="organigrama">Organigrama</button>
   <button class="tab-btn" data-tab="reglamento">Reglamento</button>
   <button class="tab-btn" data-tab="importante">Aspectos clave</button>
-  <button class="tab-btn" data-tab="chatbot">Chatea con Taki 🥁</button>
+  <button class="tab-btn" data-tab="chatbot">Preguntas frecuentes 🥁</button>
 </nav>
 
 <main>
@@ -322,8 +322,8 @@
       <ul>
         <li><strong>Organigrama:</strong> quién dirige cada área y qué hace cada una.</li>
         <li><strong>Reglamento:</strong> el reglamento completo de la filial, organizado por temas.</li>
-        <li><strong>Cosas importantes:</strong> detalles del día a día que todo miembro nuevo debe saber.</li>
-        <li><strong>Preguntale al Shidoin:</strong> un chatbot para resolver dudas rápidas basado en este mismo contenido.</li>
+        <li><strong>Aspectos clave:</strong> detalles del día a día que todo miembro nuevo debe saber.</li>
+        <li><strong>Preguntas frecuentes:</strong> un chatbot para resolver dudas rápidas basado en este mismo contenido.</li>
       </ul>
     </div>
   </section>
@@ -646,8 +646,8 @@
 
   <!-- CHATBOT -->
   <section class="panel" id="chatbot">
-    <h2 class="section-title">Chatea con Taki</h2>
-    <p class="section-lede">Taki es un asistente sencillo que responde según el reglamento y el organigrama de RKMD Lima Centro. Si la pregunta está fuera de lo que sabe, te lo dirá — no inventa respuestas.</p>
+    <h2 class="section-title">Preguntas frecuentes</h2>
+    <p class="section-lede">Un asistente sencillo que responde según el reglamento y el organigrama de RKMD Lima Centro. Si la pregunta está fuera de lo que sabe, te lo dirá — no inventa respuestas.</p>
 
     <div class="chat-shell">
       <div class="chat-log" id="chatLog"></div>
@@ -770,7 +770,7 @@
   ];
 
   const FALLBACK = "Esa pregunta está fuera de lo que puedo responder con la información que tengo. Te recomiendo contactar a un miembro de la directiva para que te ayude directamente.";
-  const GREETING = "¡Yoroshiku! Soy Taki 🥁, un asistente basado en el reglamento y el organigrama de RKMD Lima Centro. Pregúntame sobre horarios, áreas, uniforme, cuotas, faltas, etc.";
+  const GREETING = "¡Yoroshiku! Soy un asistente basado en el reglamento y el organigrama de RKMD Lima Centro. Pregúntame sobre horarios, áreas, uniforme, cuotas, faltas, etc.";
 
   const chatLog = document.getElementById('chatLog');
   const chatInput = document.getElementById('chatInput');
